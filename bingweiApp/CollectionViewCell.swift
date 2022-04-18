@@ -13,8 +13,7 @@ class CollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var stream: UILabel!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var task: UILabel!
-    //這邊是收尋(sreach)頁面的物件
-    
+    @IBOutlet weak var Title: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         stream.layer.cornerRadius = 8

@@ -18,8 +18,8 @@ class SreachVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         super.didReceiveMemoryWarning()
     }
     
-    var list  = [Item]()//陣列清單
-    var searchlist = [Item]()
+    var list  = [searchobj]()//陣列清單
+    var searchlist = [searchobj]()
     
     //  初始化執行
     override func viewDidLoad() {
@@ -28,7 +28,7 @@ class SreachVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         collectionview.delegate = self
         
         let searchresponse : SearchRespone = load("roomData")//呼叫解析
-        self.list = searchresponse.result.stream_list//拿到了～～
+        self.list = searchresponse.result.lightyear_list//拿到了～～
         //        print(list[0].head_photo)
         searchlist = self.list
         configureCellSize()//呼叫Cell的Size方法
@@ -55,6 +55,7 @@ class SreachVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         cell.Sreachname.text = row.nickname
         cell.Sreachtask.text = row.tags
         cell.Sreachphoto.image = UIImage(named: "paopao")
+        cell.Title.text = row.stream_title
         //要把url轉成images的處理
         DispatchQueue.global().async {
             do{
@@ -94,24 +95,14 @@ class SreachVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     //動態搜尋
     func searchBar(_ searchBar: UISearchBar, textDidChange searchBarText: String) {
         list.removeAll()//用於展示的空陣列
-        //陽春版(searchBarSearchButtonClicked)
-//        for item in searchlist{
-//            if  item.nickname.lowercased().contains(searchBar.text!.lowercased()){
-//                list.append(item)
-//            }else if item.tags.lowercased().contains(searchBar.text!.lowercased()){
-//                list.append(item)
-//            }
-//        }
         if searchBarText.isEmpty{
             list = searchlist
-//            print("偵測不到打字")
         }else{
             list = searchlist.filter({obj in obj.nickname.lowercased().contains(searchBarText.lowercased())})
             list = searchlist.filter({obj in obj.tags.lowercased().contains(searchBarText.lowercased())})
-//            print("我在裡面打字")
+            list = searchlist.filter({obj in obj.stream_title.lowercased().contains(searchBarText.lowercased())})
         }
         collectionview.reloadData()
-//        print("我已經reload")
     }
     //------------------------------------------------------------------------------------
     //以下為json

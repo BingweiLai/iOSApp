@@ -9,14 +9,22 @@ struct SearchRespone : Codable{
     let result: ResponeStream
 }
 struct ResponeStream : Codable{
-    //let lisght_list : [searchItem]
+    let lightyear_list : [searchobj]
     let stream_list: [Item]
 }
 struct Item: Codable{
     let head_photo: URL
     let streamer_id: Int
+    let stream_title : String
     let tags: String
     let nickname: String
+}
+struct searchobj : Codable{
+    let head_photo : URL
+    let streamer_id : Int
+    let stream_title : String
+    let nickname : String
+    let tags : String
 }
 //WsJson-------------------------------------------------------------------------------------------
 struct WsRespone : Codable {

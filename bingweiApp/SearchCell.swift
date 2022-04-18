@@ -12,6 +12,7 @@ class SearchCell: UICollectionViewCell {
     @IBOutlet weak var Sreachstream: UILabel!
     @IBOutlet weak var Sreachname: UILabel!
     @IBOutlet weak var Sreachtask: UILabel!
+    @IBOutlet weak var Title: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         Sreachphoto.layer.cornerRadius = 8
@@ -22,6 +23,8 @@ class SearchCell: UICollectionViewCell {
         Sreachname.layer.masksToBounds = true
         Sreachtask.layer.cornerRadius = 10
         Sreachtask.layer.masksToBounds = true
+        Title.layer.cornerRadius = 8
+        Title.layer.masksToBounds = true
     }
 }
 

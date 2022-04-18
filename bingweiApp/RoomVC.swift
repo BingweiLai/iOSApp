@@ -18,7 +18,9 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
     var UsernameToChat = [String]()//使用者名稱陣列
     var webSocketTask : URLSessionWebSocketTask?
     var keyname = "訪客"
-    
+    var path : String?
+    var play : AVPlayer?
+    //在進入直播間之前先確定是否有帳號登入
     override func viewWillAppear(_ animated: Bool) {
         if Auth.auth() != nil{
             let user = Auth.auth().currentUser
@@ -42,15 +44,13 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
             }
         }
     }
-    
-    
     //初始化處理
     override func viewDidLoad() {
         super.viewDidLoad()
         //tableview.delegate = self不實做這一項的話,要用拉的！！！！！
         tableview.backgroundColor = UIColor.clear
         //WS連線
-        guard let url = URL(string: "wss://lott-dev.lottcube.asia/ws/chat/chat:app_test?nickname=\(keyname)") else {
+        guard let url = URL(string: "wss://lott-dev.lottcube.asia/ws/chat/chat:app_test?nickname=\(keyname)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!) else {
             print("can not create url!")
             return
         }
@@ -65,25 +65,22 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
     }
     //取得本機影片
     func playVideo() {
-        guard let path = Bundle.main.path(forResource: "hime3", ofType:"mp4") else {
+        
+        path = Bundle.main.path(forResource: "hime3", ofType:"mp4")
+        guard path != nil
+        else {
             debugPrint("hime3.mp4 not found")
             return
         }
         //player是影片本身
-        let player = AVPlayer(url: URL(fileURLWithPath: path))
+        play = AVPlayer(url: URL(fileURLWithPath: path!))
         //影片處理階段
-        let playerLayer = AVPlayerLayer(player: player)//用AVplayerLayer實現
+        let playerLayer = AVPlayerLayer(player: play)//用AVplayerLayer實現
         playerLayer.frame = self.view.bounds
         playerLayer.videoGravity = .resizeAspectFill//全螢幕顯示
         self.view.layer.insertSublayer(playerLayer, at: 0)
-        player.play()
-        //這個方法是影片控制器的方法AVPlayerViewController
-        //let player
-        //playController = AVPlayerViewController()
-        //playerController.player = player
-        //present(playerController, animated: true) {
-        //player.play()
-        //}
+        play!.play()
+
     }
     //webcsocket-----------------------------------------------------------
     func WsSend(){//發送func
@@ -145,8 +142,7 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
             }
             self.WsReceive()
         }
-    }
-    
+    }    
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
         WsReceive()
     }
@@ -164,10 +160,12 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
         }
         textInput.text = nil
     }
-    
+    //Alert按鈕-------------------------------------------------------------------------------------
     @IBAction func BackHomeBtn(_ sender: Any) {
         let controller = UIAlertController(title: "BreakHeart", message: "確定離開此聊天室？", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "立馬走", style: .default) { _ in
+            self.webSocketTask?.cancel(with: .goingAway, reason: nil)
+            self.play?.pause()
             self.dismiss(animated: true)
             self.performSegue(withIdentifier: "BackHome", sender: self)
         }

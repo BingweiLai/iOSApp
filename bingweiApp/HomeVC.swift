@@ -24,11 +24,8 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         collectionview.delegate = self
         
         let searchresponse : SearchRespone = load("roomData")//呼叫解析
-        list = searchresponse.result.stream_list//拿到了～～
-        //print(list[0].head_photo)
-        
+        list = searchresponse.result.stream_list//取得解析
         configureCellSize()//呼叫Cell的Size方法
-        
         DispatchQueue.main.async {
             self.collectionview.reloadData()//啟動collectionview
         }
@@ -46,7 +43,6 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.list.count
     }
-    
     //在這裡顯示cell
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let row = list[indexPath.row]
@@ -55,7 +51,8 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         cell.stream.text = String(row.streamer_id)
         cell.name.text = row.nickname
         cell.task.text = row.tags
-        cell.headphoto.image = UIImage(named: "paopao")        
+        cell.headphoto.image = UIImage(named: "paopao")
+        cell.Title.text = row.stream_title
         //要把url轉成images的處理
         DispatchQueue.global().async {
             do{
