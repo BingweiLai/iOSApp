@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6pl-ZN-9Rk">
-                                <rect key="frame" x="0.0" y="93" width="414" height="720"/>
+                                <rect key="frame" x="0.0" y="49" width="414" height="813"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="nvP-2Q-c52">
                                     <size key="itemSize" width="150" height="150"/>
@@ -537,6 +537,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="eM8-pe-sop"/>
                     <connections>
+                        <outlet property="leaveBtn" destination="RMR-B0-HrQ" id="QWQ-zl-6lf"/>
+                        <outlet property="sendBtn" destination="VCV-vH-AvM" id="o6X-XI-ttT"/>
                         <outlet property="tableview" destination="Zj5-cl-anA" id="93j-JC-PIL"/>
                         <outlet property="textInput" destination="243-EY-ca5" id="59a-Hr-Fu3"/>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="BackHome" modalPresentationStyle="currentContext" id="ik4-Ni-ojS"/>
@@ -795,7 +797,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="XcS-EF-kzg"/>
         <segue reference="wla-mV-6Q0"/>
-        <segue reference="CH7-nv-zgw"/>
+        <segue reference="ik4-Ni-ojS"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="btnEdit" width="41" height="41"/>

@@ -14,12 +14,22 @@ import FirebaseAuth
 class RoomVC : UIViewController, URLSessionWebSocketDelegate {
     @IBOutlet weak var textInput: UITextField!//輸入文字的方塊
     @IBOutlet weak var tableview: UITableView!
+    
+    
+    @IBOutlet weak var sendBtn: UIButton!
+    
+    @IBOutlet weak var leaveBtn: UIButton!
+    
+    
+    
+    
     var textArray = [String]()//顯示訊息陣列
     var UsernameToChat = [String]()//使用者名稱陣列
     var webSocketTask : URLSessionWebSocketTask?
     var keyname = "訪客"
-    var path : String?
-    var play : AVPlayer?
+    var MyVideo : AVPlayer?
+    var looper: AVPlayerLooper?
+
     //在進入直播間之前先確定是否有帳號登入
     override func viewWillAppear(_ animated: Bool) {
         if Auth.auth() != nil{
@@ -47,6 +57,11 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
     //初始化處理
     override func viewDidLoad() {
         super.viewDidLoad()
+        repeatVideo()
+        view.bringSubviewToFront(textInput)
+        view.bringSubviewToFront(tableview)
+        view.bringSubviewToFront(sendBtn)
+        view.bringSubviewToFront(leaveBtn)
         //tableview.delegate = self不實做這一項的話,要用拉的！！！！！
         tableview.backgroundColor = UIColor.clear
         //WS連線
@@ -61,26 +76,21 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
     //影片播放----------------------------------------------------------------
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        playVideo()
+//        playVideo()
     }
-    //取得本機影片
-    func playVideo() {
+    
+    func repeatVideo(){
+        let url = Bundle.main.url(forResource: "hime3", withExtension: ".mp4")
+        let play = AVQueuePlayer()
+        MyVideo = play
+        let item = AVPlayerItem(url: url!)
+        let playlayer = AVPlayerLayer(player: play)
+        playlayer.frame = view.bounds
+        playlayer.videoGravity = .resizeAspectFill
+        view.layer.addSublayer(playlayer)
+        looper = AVPlayerLooper(player: play, templateItem: item)
+        self.MyVideo?.play()
         
-        path = Bundle.main.path(forResource: "hime3", ofType:"mp4")
-        guard path != nil
-        else {
-            debugPrint("hime3.mp4 not found")
-            return
-        }
-        //player是影片本身
-        play = AVPlayer(url: URL(fileURLWithPath: path!))
-        //影片處理階段
-        let playerLayer = AVPlayerLayer(player: play)//用AVplayerLayer實現
-        playerLayer.frame = self.view.bounds
-        playerLayer.videoGravity = .resizeAspectFill//全螢幕顯示
-        self.view.layer.insertSublayer(playerLayer, at: 0)
-        play!.play()
-
     }
     //webcsocket-----------------------------------------------------------
     func WsSend(){//發送func
@@ -142,7 +152,8 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
             }
             self.WsReceive()
         }
-    }    
+    }
+    
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
         WsReceive()
     }
@@ -165,7 +176,6 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
         let controller = UIAlertController(title: "BreakHeart", message: "確定離開此聊天室？", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "立馬走", style: .default) { _ in
             self.webSocketTask?.cancel(with: .goingAway, reason: nil)
-            self.play?.pause()
             self.dismiss(animated: true)
             self.performSegue(withIdentifier: "BackHome", sender: self)
         }
