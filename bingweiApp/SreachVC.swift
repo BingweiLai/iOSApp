@@ -26,15 +26,12 @@ class SreachVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         super.viewDidLoad()
         collectionview.dataSource = self
         collectionview.delegate = self
-        
+        //Json
         let searchresponse : SearchRespone = load("roomData")//呼叫解析
         self.list = searchresponse.result.lightyear_list//拿到了～～
         //        print(list[0].head_photo)
         searchlist = self.list
-        configureCellSize()//呼叫Cell的Size方法
-        
-        
-        
+        //collectionView
         DispatchQueue.main.async {
             self.collectionview.reloadData()//啟動collectionview
         }
@@ -72,14 +69,21 @@ class SreachVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         return cell;
     }
     //CollectView的排版設定
-    func configureCellSize(){
-        let layout = collectionview.collectionViewLayout as? UICollectionViewFlowLayout
-        
-        layout?.estimatedItemSize = .zero
-        layout?.minimumLineSpacing = 0
-        
-        let width = collectionview.bounds.width/2-20
-        layout?.itemSize = CGSize(width: width, height: width)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let bounds = collectionView.bounds
+        let hightVel = self.view.frame.height
+        let widthVel = self.view.frame.width
+        let cellsize = (hightVel < widthVel) ? bounds.height/2 : bounds.width/2
+        return CGSize(width: cellsize - 10 , height: cellsize - 10 )
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
     }
     //collectionview 點擊事件響應
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

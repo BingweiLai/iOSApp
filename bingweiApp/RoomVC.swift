@@ -14,14 +14,11 @@ import FirebaseAuth
 class RoomVC : UIViewController, URLSessionWebSocketDelegate {
     @IBOutlet weak var textInput: UITextField!//輸入文字的方塊
     @IBOutlet weak var tableview: UITableView!
-    
-    
     @IBOutlet weak var sendBtn: UIButton!
-    
     @IBOutlet weak var leaveBtn: UIButton!
+    @IBOutlet weak var chatView: UIView!
     
-    
-    
+    @IBOutlet weak var viewButton: NSLayoutConstraint!
     
     var textArray = [String]()//顯示訊息陣列
     var UsernameToChat = [String]()//使用者名稱陣列
@@ -32,7 +29,7 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
 
     //在進入直播間之前先確定是否有帳號登入
     override func viewWillAppear(_ animated: Bool) {
-        if Auth.auth() != nil{
+        if Auth.auth().currentUser != nil{
             let user = Auth.auth().currentUser
             if let user = user{
                 let email = user.email
@@ -43,42 +40,45 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
                     if let snapshot = snapshot{
                         //取值
                         let snapshotdata = snapshot.data()?["name"]
-                        //self.nameLabel.text = "\(snapshotdata)"
                         if let nameStr = snapshotdata as? String{
-                            //print("\(nameStr)")
                             self.keyname = nameStr
+                            self.Wscontent()
                         }
                     }
                 }
                 }
             }
+        }else{
+            Wscontent()
         }
     }
     //初始化處理
     override func viewDidLoad() {
         super.viewDidLoad()
+        //影片重複播放func
         repeatVideo()
+        //將UI元件向上移動
         view.bringSubviewToFront(textInput)
         view.bringSubviewToFront(tableview)
         view.bringSubviewToFront(sendBtn)
         view.bringSubviewToFront(leaveBtn)
-        //tableview.delegate = self不實做這一項的話,要用拉的！！！！！
+        view.bringSubviewToFront(chatView)
+        //按鈕外觀設計
+        sendBtn.layer.cornerRadius = 10
+        sendBtn.layer.masksToBounds = true
+        leaveBtn.layer.cornerRadius = 10
+        leaveBtn.layer.masksToBounds = true
+        //keyboard事件監聽與上抬
+        addKeyboardObserver()
+        //背景透明
+        chatView.backgroundColor = UIColor.clear
         tableview.backgroundColor = UIColor.clear
-        //WS連線
-        guard let url = URL(string: "wss://lott-dev.lottcube.asia/ws/chat/chat:app_test?nickname=\(keyname)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!) else {
-            print("can not create url!")
-            return
-        }
-        let seesion = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
-        webSocketTask = seesion.webSocketTask(with: url)
-        webSocketTask!.resume()
-    }
+            }
     //影片播放----------------------------------------------------------------
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        playVideo()
     }
-    
+    //影片循環
     func repeatVideo(){
         let url = Bundle.main.url(forResource: "hime3", withExtension: ".mp4")
         let play = AVQueuePlayer()
@@ -93,6 +93,16 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
         
     }
     //webcsocket-----------------------------------------------------------
+    func Wscontent(){
+        //WS連線
+        guard let url = URL(string: "wss://lott-dev.lottcube.asia/ws/chat/chat:app_test?nickname=\(keyname)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!) else {
+            print("can not create url!")
+            return
+        }
+        let seesion = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
+        webSocketTask = seesion.webSocketTask(with: url)
+        webSocketTask!.resume()
+    }
     func WsSend(){//發送func
         let WSsendText = textInput.text!
         //按照傳輸的格式才能傳出去
@@ -153,7 +163,6 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
             self.WsReceive()
         }
     }
-    
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
         WsReceive()
     }
@@ -173,9 +182,20 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
     }
     //Alert按鈕-------------------------------------------------------------------------------------
     @IBAction func BackHomeBtn(_ sender: Any) {
-        let controller = UIAlertController(title: "BreakHeart", message: "確定離開此聊天室？", preferredStyle: .alert)
+        let controller = UIAlertController(title: "", message: "確定離開此聊天室？", preferredStyle: .alert)
+        //將照片加入Alert視窗裡面
+        let imageView =  UIImageView(frame: CGRect(x: 60, y: 50, width: 150, height: 130))
+        imageView.image = UIImage(named: "brokenHeart")
+        controller.view.addSubview(imageView)
+        let height = NSLayoutConstraint(item: controller.view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 240)
+        let width = NSLayoutConstraint(item: controller.view, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 200)
+        controller.view.addConstraint(height)
+        controller.view.addConstraint(width)
+        
+        
         let okAction = UIAlertAction(title: "立馬走", style: .default) { _ in
             self.webSocketTask?.cancel(with: .goingAway, reason: nil)
+            self.MyVideo?.pause()
             self.dismiss(animated: true)
             self.performSegue(withIdentifier: "BackHome", sender: self)
         }
@@ -183,6 +203,36 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
         let cancelAction = UIAlertAction(title: "先不要", style: .cancel, handler: nil)
         controller.addAction(cancelAction)
         present(controller, animated: true, completion: nil)}
+}
+//鍵盤聊天室向上彈跳
+extension RoomVC {
+    func addKeyboardObserver() {
+        //因為selector寫法只要指定方法名稱即可，參數則是已經定義好的NSNotification物件，所以不指定參數的寫法「#selector(keyboardWillShow)」也可以
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    @objc func keyboardWillShow(notification: Notification) {
+        // 能取得鍵盤高度就讓view上移鍵盤高度，否則上移view的1/3高度
+        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRect = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRect.height
+            //view.frame.origin.y = -keyboardHeight
+            viewButton.constant = -315
+        }
+        /*else {
+            view.frame.origin.y = -view.frame.height / 3
+        }*/
+    }
+    @objc func keyboardWillHide(notification: Notification) {
+        // 讓view回復原位
+        viewButton.constant = 15
+    }
+    // 當畫面消失時取消監控鍵盤開闔狀態
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
 }
 
 extension RoomVC : UITableViewDelegate, UITableViewDataSource {
@@ -201,6 +251,9 @@ extension RoomVC : UITableViewDelegate, UITableViewDataSource {
         let index = textArray.count - 1 - indexPath.row
         cell.MessageText.text = "\(UsernameToChat[index]) : \(textArray[index])"
         return cell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.view.endEditing(true)
     }
     //當點擊view任何一處鍵盤收起
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
