@@ -11,8 +11,11 @@ import Firebase
 
 //  首頁VC
 class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
     //collectionview
     @IBOutlet weak var collectionview: UICollectionView!
+    
+    var keyname : String?
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -27,6 +30,33 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         list = searchresponse.result.stream_list//取得解析
         DispatchQueue.main.async {
             self.collectionview.reloadData()//啟動collectionview
+        }
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        if Auth.auth().currentUser != nil{
+            let user = Auth.auth().currentUser
+            if let user = user{
+                let email = user.email
+                let reference = Firestore.firestore().collection("User")
+                reference.document(email!).getDocument { (snapshot ,error) in if let error = error{
+                    print(error.localizedDescription)
+                }else{
+                    if let snapshot = snapshot{
+                        //取值
+                        let snapshotdata = snapshot.data()?["name"]
+                        if let nameStr = snapshotdata as? String{
+                            self.keyname = nameStr
+                            print(nameStr)
+                            print(self.keyname)
+                            self.collectionview.reloadData()
+                        }
+                    }
+                }
+                }
+            }
+        }else{
+            keyname = "訪客"
+            self.collectionview.reloadData()
         }
     }
     //監聽使用者
@@ -89,6 +119,15 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
 //        print("item at \(indexPath.section)/\(indexPath.item) tapped")
         self.performSegue(withIdentifier: "ChatRoom", sender: self)
       }
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+         let headView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerCollection", for: indexPath) as? HomeheaderCollectionReusableView
+        headView?.userName.text = keyname
+        print(headView?.userName.text)
+        print("進入header")
+        return headView!
+        
+    }
     //------------------------------------------------------------------------------------
     //以下為json
     //json解析函式

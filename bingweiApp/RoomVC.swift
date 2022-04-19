@@ -95,7 +95,7 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
     //webcsocket-----------------------------------------------------------
     func Wscontent(){
         //WS連線
-        guard let url = URL(string: "wss://lott-dev.lottcube.asia/ws/chat/chat:app_test?nickname=\(keyname)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!) else {
+        guard let url = URL(string: "wss://client-dev.lottcube.asia/ws/chat/chat:app_test?nickname=\(keyname)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!) else {
             print("can not create url!")
             return
         }
@@ -175,7 +175,6 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
         guard let myOldText = textInput.text else {
             return
         }
-        
         let myMewText = myOldText.trimmingCharacters(in: CharacterSet.whitespaces)
         
         if myMewText.count == 0{
@@ -229,9 +228,6 @@ extension RoomVC {
             //view.frame.origin.y = -keyboardHeight
             viewButton.constant = -315
         }
-        /*else {
-            view.frame.origin.y = -view.frame.height / 3
-        }*/
     }
     @objc func keyboardWillHide(notification: Notification) {
         // 讓view回復原位

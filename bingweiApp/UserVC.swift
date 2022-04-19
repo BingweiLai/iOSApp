@@ -60,9 +60,13 @@ class UserVC : UIViewController {
         //登出功能
         if Auth.auth().currentUser != nil {
             do {
+                //登出動作及跳轉
                 try Auth.auth().signOut()
-                self.performSegue(withIdentifier: "Logout", sender: self)
-                //print("Logout Scessful")
+                if let controller = self.storyboard?.instantiateViewController(withIdentifier: "LoginView") as? LoginVC{
+                    controller.modalPresentationStyle = .currentContext
+                    self.navigationController?.viewControllers = [controller]
+                }
+                
             }catch let error as NSError{
                 print(error.localizedDescription)
             }

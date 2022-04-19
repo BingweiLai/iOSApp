@@ -23,13 +23,13 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="nvP-2Q-c52">
                                     <size key="itemSize" width="150" height="150"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="headerReferenceSize" width="50" height="50"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="Kg0-j7-K7l" customClass="CollectionViewCell" customModule="bingweiApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                        <rect key="frame" x="0.0" y="50" width="150" height="150"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="67Q-b0-Mzz">
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
@@ -111,6 +111,40 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="headerCollection" id="X8b-9K-Syg" customClass="HomeheaderCollectionReusableView" customModule="bingweiApp" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="topPic" translatesAutoresizingMaskIntoConstraints="NO" id="vwb-7C-cO4">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="50" id="9VO-SU-g8F"/>
+                                                <constraint firstAttribute="height" constant="50" id="xkU-QD-cyo"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1xM-bz-qkK">
+                                            <rect key="frame" x="58" y="5" width="36" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" id="OoP-Jb-Mdm"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="1xM-bz-qkK" firstAttribute="leading" secondItem="vwb-7C-cO4" secondAttribute="trailing" constant="8" symbolic="YES" id="4KJ-Vz-Gvv"/>
+                                        <constraint firstAttribute="bottom" secondItem="1xM-bz-qkK" secondAttribute="bottom" constant="5" id="MNr-GL-jg4"/>
+                                        <constraint firstItem="1xM-bz-qkK" firstAttribute="top" secondItem="X8b-9K-Syg" secondAttribute="top" constant="5" id="Ut3-2U-G1l"/>
+                                        <constraint firstItem="vwb-7C-cO4" firstAttribute="leading" secondItem="X8b-9K-Syg" secondAttribute="leading" id="dx7-BW-DdY"/>
+                                        <constraint firstAttribute="bottom" secondItem="vwb-7C-cO4" secondAttribute="bottom" id="gxu-a8-EXL"/>
+                                        <constraint firstItem="vwb-7C-cO4" firstAttribute="height" secondItem="X8b-9K-Syg" secondAttribute="height" id="hYu-eE-tGq"/>
+                                        <constraint firstItem="vwb-7C-cO4" firstAttribute="top" secondItem="X8b-9K-Syg" secondAttribute="top" id="l1v-dr-YFM"/>
+                                    </constraints>
+                                    <connections>
+                                        <outlet property="userName" destination="1xM-bz-qkK" id="7nH-lP-psU"/>
+                                    </connections>
+                                </collectionReusableView>
                             </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -118,6 +152,7 @@
                         <constraints>
                             <constraint firstItem="6pl-ZN-9Rk" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="3fB-Da-QyT"/>
                             <constraint firstItem="6pl-ZN-9Rk" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="6yQ-QE-YZR"/>
+                            <constraint firstItem="6pl-ZN-9Rk" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="5" id="B84-An-608"/>
                             <constraint firstItem="6pl-ZN-9Rk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="cVS-hy-nvj"/>
                             <constraint firstItem="6pl-ZN-9Rk" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="5" id="eeT-BK-Kfs"/>
                         </constraints>
@@ -131,7 +166,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-591" y="-1404"/>
+            <point key="canvasLocation" x="-591.304347826087" y="-1404.2410714285713"/>
         </scene>
         <!--Person-->
         <scene sceneID="Ehp-Nd-fNs">
@@ -207,7 +242,6 @@
                         <outlet property="accountLabel" destination="zUm-UZ-F6i" id="8rm-xN-2Rj"/>
                         <outlet property="logoutAction" destination="v5Z-y4-JsB" id="3t1-3w-A1R"/>
                         <outlet property="nameLabel" destination="ikl-az-4IN" id="nb1-aI-WDE"/>
-                        <segue destination="UKg-GA-1kw" kind="presentation" identifier="Logout" modalPresentationStyle="currentContext" id="wla-mV-6Q0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7jH-X6-8qg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -403,7 +437,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="註冊"/>
                                 <connections>
-                                    <action selector="AdminBtn:" destination="UKg-GA-1kw" eventType="touchUpInside" id="FiL-f0-yXc"/>
+                                    <segue destination="ue0-og-0ec" kind="show" id="PFC-Ry-WWS"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -430,7 +464,6 @@
                         <outlet property="adminTxt" destination="AFT-Sl-vwr" id="GKJ-pR-3kc"/>
                         <outlet property="btnLogin" destination="byP-Yy-n64" id="Oof-pm-eZI"/>
                         <outlet property="pwdTxt" destination="Pgs-M8-mEX" id="HbL-zc-sQx"/>
-                        <segue destination="ue0-og-0ec" kind="push" id="47v-qQ-BQs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1f0-Jz-CgY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -623,7 +656,7 @@
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="btnEdit"/>
                                 <connections>
-                                    <segue destination="WoA-CG-dKr" kind="push" id="xOO-de-fHC"/>
+                                    <segue destination="WoA-CG-dKr" kind="show" id="xOO-de-fHC"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="註冊會員" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CxV-zE-Wi7">
@@ -765,8 +798,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="XcS-EF-kzg"/>
-        <segue reference="T0I-k2-QV6"/>
+        <segue reference="fxy-lU-HLe"/>
         <segue reference="ik4-Ni-ojS"/>
     </inferredMetricsTieBreakers>
     <resources>
@@ -777,6 +809,7 @@
         <image name="person" catalog="system" width="128" height="117"/>
         <image name="picPersonal" width="112" height="112"/>
         <image name="send" width="22" height="22"/>
+        <image name="topPic" width="30" height="30"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

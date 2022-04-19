@@ -12,6 +12,7 @@ import UIKit
 //  首頁VC
 class SreachVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
     
+    
     @IBOutlet weak var collectionview: UICollectionView!
     
         override func didReceiveMemoryWarning() {
@@ -35,6 +36,7 @@ class SreachVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         DispatchQueue.main.async {
             self.collectionview.reloadData()//啟動collectionview
         }
+       
     }
     
     //-----------------------------------------------------------------------
@@ -132,9 +134,13 @@ class SreachVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         }
     }
     //當點擊view任何一處鍵盤收起
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+  
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         self.view.endEditing(true)
     }
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        self.view.endEditing(true)
+//    }
 //    //按下鍵盤return鍵收起鍵盤
 //    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 //    self.view.endEditing(true)

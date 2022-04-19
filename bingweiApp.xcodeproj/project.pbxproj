@@ -30,6 +30,7 @@
 		4BB6FD1A280916D7005F03EE /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB6FD19280916D7005F03EE /* SearchCell.swift */; };
 		4BB6FD1C28092497005F03EE /* PhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB6FD1B28092497005F03EE /* PhotoVC.swift */; };
 		4BFD977D2805569C009913BA /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD977C2805569C009913BA /* TableViewCell.swift */; };
+		4BFDFA77280E4B140028F362 /* HomeheaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFDFA76280E4B140028F362 /* HomeheaderCollectionReusableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		4BB6FD19280916D7005F03EE /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		4BB6FD1B28092497005F03EE /* PhotoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoVC.swift; sourceTree = "<group>"; };
 		4BFD977C2805569C009913BA /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		4BFDFA76280E4B140028F362 /* HomeheaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeheaderCollectionReusableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				4B597E5427FE918700E88D97 /* CollectionViewCell.swift */,
 				4BB6FD19280916D7005F03EE /* SearchCell.swift */,
 				4BFD977C2805569C009913BA /* TableViewCell.swift */,
+				4BFDFA76280E4B140028F362 /* HomeheaderCollectionReusableView.swift */,
 				4B05A2002803C113009A0CBB /* SearchbarView.swift */,
 				4B79625727F6CAA50040256E /* StructModel.swift */,
 				4BB6FD1B28092497005F03EE /* PhotoVC.swift */,
@@ -213,6 +216,7 @@
 				4B79625827F6CAA50040256E /* StructModel.swift in Sources */,
 				4B597E5527FE918700E88D97 /* CollectionViewCell.swift in Sources */,
 				4B25CDE327F3D71200FBE786 /* AppDelegate.swift in Sources */,
+				4BFDFA77280E4B140028F362 /* HomeheaderCollectionReusableView.swift in Sources */,
 				4B4553F028050A5900FBD232 /* RoomVC.swift in Sources */,
 				4B2F422627F434DD007F9134 /* LoginVC.swift in Sources */,
 				4BFD977D2805569C009913BA /* TableViewCell.swift in Sources */,

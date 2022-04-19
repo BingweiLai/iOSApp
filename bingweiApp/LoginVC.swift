@@ -15,11 +15,7 @@ class LoginVC : UIViewController,UITextFieldDelegate{
     
     
     @IBAction func AdminBtn(_ sender: Any) {
-        let controller = self.storyboard?.instantiateViewController(withIdentifier: "AdminView") as! AdminVC
-        self.navigationController?.pushViewController(controller, animated: true)
-        
-    
-        
+
     }
     
     @IBAction func btnLogin(_ sender: Any) {
