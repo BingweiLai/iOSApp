@@ -18,11 +18,19 @@ class PhotoVC : UIViewController{
         
     }
     
+    @IBAction func Camera(_ sender: Any) {
+        let alert = UIAlertController(title: "功能尚未完成", message:"敬請期待", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "ok", style: .default, handler: nil)
+        alert.addAction(ok)
+        self.present(alert, animated: true, completion: nil)
+        
+    }
     @IBAction func PhotoBtn(_ sender: Any) {
-        if let controller = self.storyboard?.instantiateViewController(withIdentifier: "AdminView") as? AdminVC
-        {
-            controller.modalPresentationStyle = .fullScreen
-            self.present(controller, animated: true, completion: nil)
-        }
+        let alert = UIAlertController(title: "功能尚未完成", message:"敬請期待", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "ok", style: .default, handler: nil)
+        alert.addAction(ok)
+        self.present(alert, animated: true, completion: nil)
+        
+
     }
 }

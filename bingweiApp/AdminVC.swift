@@ -17,21 +17,13 @@ class AdminVC: UIViewController{
     
     @IBOutlet weak var btnAdmin: UIButton!
     
-    @IBAction func backbtn(_ sender: Any) {
-        //跳轉到登入介面(Login)
-        if let controller = self.storyboard?.instantiateViewController(withIdentifier: "LoginView") as? LoginVC
-        { controller.modalPresentationStyle = .currentContext
-            self.present(controller, animated: true, completion: nil)
-            
-        }
-    }
     
     //註冊動作鈕
     @IBAction func btnSend(_ sender: Any) {
         //註冊
         if (adminTxt.text == "" || pwdTxt.text == "" || nameTxt.text == ""){
             //通知視窗
-            let alert = UIAlertController(title: "error", message:"註冊失敗", preferredStyle: .alert)
+            let alert = UIAlertController(title: "註冊失敗", message:"請檢查輸入格式", preferredStyle: .alert)
             let ok = UIAlertAction(title: "ok", style: .default, handler: nil)
             alert.addAction(ok)
             self.present(alert, animated: true, completion: nil)
@@ -66,9 +58,10 @@ class AdminVC: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.hidesBackButton = true
     }
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        dismiss(animated: true)
+    }
     
 }
 

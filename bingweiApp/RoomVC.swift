@@ -172,13 +172,23 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
     //聊天室實作-------------------------------------------------------------------------------
     //發送訊息Button
     @IBAction func updateText(_ sender: Any) {
-        if textInput.text == " "{
-            textInput.text = nil
+        guard let myOldText = textInput.text else {
             return
+        }
+        
+        let myMewText = myOldText.trimmingCharacters(in: CharacterSet.whitespaces)
+        
+        if myMewText.count == 0{
+            let alert = UIAlertController(title: "請輸入文字", message:"不能是空白或者無文字", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "ok", style: .default, handler: nil)
+            alert.addAction(ok)
+            self.present(alert, animated: true, completion: nil)
+            textInput.text = nil
         }else{
             WsSend()
+            textInput.text = nil
         }
-        textInput.text = nil
+        
     }
     //Alert按鈕-------------------------------------------------------------------------------------
     @IBAction func BackHomeBtn(_ sender: Any) {

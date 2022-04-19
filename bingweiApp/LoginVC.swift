@@ -12,12 +12,22 @@ class LoginVC : UIViewController,UITextFieldDelegate{
     @IBOutlet weak var pwdTxt: UITextField!
     @IBOutlet weak var btnLogin: UIButton!
     //  btnLogin事件
+    
+    
+    @IBAction func AdminBtn(_ sender: Any) {
+        let controller = self.storyboard?.instantiateViewController(withIdentifier: "AdminView") as! AdminVC
+        self.navigationController?.pushViewController(controller, animated: true)
+        
+    
+        
+    }
+    
     @IBAction func btnLogin(_ sender: Any) {
         
         Auth.auth().signIn(withEmail: adminTxt.text!, password: pwdTxt.text!){(user, error)in if error != nil{
             print(error!)
             //          如果登入畫面失敗跳出視窗
-            let alert = UIAlertController(title: "登入失敗", message:error?.localizedDescription, preferredStyle: .alert)
+            let alert = UIAlertController(title: "登入失敗", message:"帳號或密碼錯誤", preferredStyle: .alert)
             let ok = UIAlertAction(title: "ok", style: .default, handler: nil)
             alert.addAction(ok)
             self.present(alert, animated: true, completion: nil)
