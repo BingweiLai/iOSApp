@@ -108,6 +108,7 @@ class SreachVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             list = searchlist.filter({obj in obj.tags.lowercased().contains(searchBarText.lowercased())})
             list = searchlist.filter({obj in obj.stream_title.lowercased().contains(searchBarText.lowercased())})
         }
+        print("測試")
         collectionview.reloadData()
     }
     //------------------------------------------------------------------------------------
@@ -137,14 +138,6 @@ class SreachVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
   
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         self.view.endEditing(true)
+        
     }
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        self.view.endEditing(true)
-//    }
-//    //按下鍵盤return鍵收起鍵盤
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//    self.view.endEditing(true)
-//    textField.resignFirstResponder（）//要求離開我們的Responder
-//    return true
-//    }
 }

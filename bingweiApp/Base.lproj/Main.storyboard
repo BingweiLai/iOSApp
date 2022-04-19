@@ -257,17 +257,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="j47-F7-qzB">
-                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <rect key="frame" x="0.0" y="122" width="414" height="691"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="8hK-L5-7SF">
                                     <size key="itemSize" width="150" height="150"/>
-                                    <size key="headerReferenceSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Searchcell" id="o4I-iu-39j" customClass="SearchCell" customModule="bingweiApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="150" height="150"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bRl-n6-nxX">
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
@@ -341,32 +341,25 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="cellsearch" id="eFM-QU-Sp5" customClass="SearchbarView" customModule="bingweiApp" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gze-Mz-JV2">
-                                            <rect key="frame" x="0.0" y="3" width="414" height="44"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                            <textInputTraits key="textInputTraits"/>
-                                            <connections>
-                                                <outlet property="delegate" destination="h7O-oq-rmq" id="9xL-2o-Ylx"/>
-                                            </connections>
-                                        </searchBar>
-                                    </subviews>
-                                    <connections>
-                                        <outlet property="search" destination="gze-Mz-JV2" id="SSL-50-XLt"/>
-                                    </connections>
-                                </collectionReusableView>
                             </collectionView>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="gze-Mz-JV2">
+                                <rect key="frame" x="0.0" y="55" width="414" height="51"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="h7O-oq-rmq" id="9xL-2o-Ylx"/>
+                                </connections>
+                            </searchBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="2R8-t3-4jG"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="j47-F7-qzB" firstAttribute="bottom" secondItem="2R8-t3-4jG" secondAttribute="bottom" id="C0v-6n-aqD"/>
-                            <constraint firstItem="j47-F7-qzB" firstAttribute="top" secondItem="2R8-t3-4jG" secondAttribute="top" id="NcE-Gn-qe4"/>
-                            <constraint firstItem="j47-F7-qzB" firstAttribute="trailing" secondItem="2R8-t3-4jG" secondAttribute="trailing" id="kCH-vX-Za1"/>
-                            <constraint firstItem="j47-F7-qzB" firstAttribute="leading" secondItem="2R8-t3-4jG" secondAttribute="leading" id="yWh-29-eIM"/>
+                            <constraint firstItem="gze-Mz-JV2" firstAttribute="top" secondItem="2R8-t3-4jG" secondAttribute="top" constant="11" id="1P6-3y-BYA"/>
+                            <constraint firstItem="gze-Mz-JV2" firstAttribute="leading" secondItem="2R8-t3-4jG" secondAttribute="leading" id="64P-Zx-Osm"/>
+                            <constraint firstItem="j47-F7-qzB" firstAttribute="trailing" secondItem="2R8-t3-4jG" secondAttribute="trailing" id="7CN-iR-bHZ"/>
+                            <constraint firstItem="j47-F7-qzB" firstAttribute="bottom" secondItem="2R8-t3-4jG" secondAttribute="bottom" id="7SE-HJ-18v"/>
+                            <constraint firstItem="j47-F7-qzB" firstAttribute="leading" secondItem="2R8-t3-4jG" secondAttribute="leading" id="A0p-eK-1PW"/>
+                            <constraint firstItem="gze-Mz-JV2" firstAttribute="trailing" secondItem="2R8-t3-4jG" secondAttribute="trailing" id="NiQ-2B-2PS"/>
+                            <constraint firstItem="j47-F7-qzB" firstAttribute="top" secondItem="gze-Mz-JV2" secondAttribute="bottom" constant="16" id="Slz-26-dAg"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Search" image="magnifyingglass" catalog="system" id="ss5-95-u34"/>
@@ -378,7 +371,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oBU-15-5s1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="367" y="-1404"/>
+            <point key="canvasLocation" x="366.66666666666669" y="-1404.2410714285713"/>
         </scene>
         <!--個人-->
         <scene sceneID="gke-eB-Wjd">
