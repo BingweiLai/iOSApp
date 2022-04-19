@@ -11,43 +11,47 @@ import Firebase
 
 //  首頁VC
 class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
     //collectionview
     @IBOutlet weak var collectionview: UICollectionView!
-    
+    //連接WebSocket時的暱稱預設是訪客
     var keyname : String?
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    var list  = [Item]()//陣列清單
-    //  初始化執行
+    //陣列清單
+    var list  = [Item]()
+    //初始化
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionview.dataSource = self
         collectionview.delegate = self
         //Json
-        let searchresponse : SearchRespone = load("roomData")//呼叫解析
-        list = searchresponse.result.stream_list//取得解析
+        let searchresponse : SearchRespone = load("roomData")
+        //取得Json解析
+        list = searchresponse.result.stream_list
         DispatchQueue.main.async {
-            self.collectionview.reloadData()//啟動collectionview
+            //啟動collectionview
+            self.collectionview.reloadData()
         }
     }
+    //當畫面即將顯示
     override func viewWillAppear(_ animated: Bool) {
+        //監聽使用者不為nil時
         if Auth.auth().currentUser != nil{
             let user = Auth.auth().currentUser
             if let user = user{
+                //取得使用者信箱
                 let email = user.email
                 let reference = Firestore.firestore().collection("User")
                 reference.document(email!).getDocument { (snapshot ,error) in if let error = error{
-                    print(error.localizedDescription)
+                    print("錯誤訊息:\(error.localizedDescription)")
                 }else{
                     if let snapshot = snapshot{
                         //取值
                         let snapshotdata = snapshot.data()?["name"]
                         if let nameStr = snapshotdata as? String{
+                            //取得暱稱之後給keyname
                             self.keyname = nameStr
                             print(nameStr)
                             print(self.keyname)
+                            //重整collectionview
                             self.collectionview.reloadData()
                         }
                     }
@@ -55,28 +59,22 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
                 }
             }
         }else{
+            //沒有人登入時
             keyname = "訪客"
             self.collectionview.reloadData()
-        }
-    }
-    //監聽使用者
-    func checkuser(){
-        if Auth.auth().currentUser != nil {
-            print("使用者登入")
-        } else {
-            print("使用者登出")
         }
     }
     //-----------------------------------------------------------------------
     //CollectView實作
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        //顯示有幾格
         return self.list.count
     }
     //在這裡顯示cell
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let row = list[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
-        
+        //顯示每個cell裡面物件的資訊
         cell.stream.text = String(row.streamer_id)
         cell.name.text = row.nickname
         cell.task.text = row.tags
@@ -92,12 +90,12 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
                     cell.headphoto.image = downLoadImage
                 }
             }catch{
-                print(error.localizedDescription)
+                print("錯誤訊息：\(error.localizedDescription)")
             }
         }
         return cell;
     }    
-    //CollectView設定
+    //CollectView排版設定設定
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
     }
@@ -116,15 +114,13 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
     //collectionview事件點擊
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        print("item at \(indexPath.section)/\(indexPath.item) tapped")
         self.performSegue(withIdentifier: "ChatRoom", sender: self)
       }
-
+    //collectionview_header的設定
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
          let headView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerCollection", for: indexPath) as? HomeheaderCollectionReusableView
         headView?.userName.text = keyname
         print(headView?.userName.text)
-        print("進入header")
         return headView!
         
     }

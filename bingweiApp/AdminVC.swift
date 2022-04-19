@@ -41,17 +41,8 @@ class AdminVC: UIViewController{
                     if error != nil{
                         print(error!.localizedDescription)
                     }else{
-                        
-                        
                         print ("successfully write in !")
-                        do{
-                            try Auth.auth().signOut()
-                            print("登出")
-                        }catch{
-                            print("沒有登出")
-                        }
                         self.navigationController?.popViewController(animated: true)
-                        
                     }
                 }
             }
