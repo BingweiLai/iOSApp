@@ -46,7 +46,7 @@ class AdminVC: UIViewController{
                         print ("successfully write in !")
                         do{
                             try Auth.auth().signOut()
-                            print("我嘗試登出")
+                            print("登出")
                         }catch{
                             print("沒有登出")
                         }
