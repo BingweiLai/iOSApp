@@ -27,6 +27,8 @@ class AdminVC: UIViewController{
             let ok = UIAlertAction(title: "ok", style: .default, handler: nil)
             alert.addAction(ok)
             self.present(alert, animated: true, completion: nil)
+            
+            
         }else{
             //帳號創建
             Auth.auth().createUser(withEmail:adminTxt.text!, password:pwdTxt.text! )
@@ -37,17 +39,22 @@ class AdminVC: UIViewController{
                 let PersonData = ["name" : nickname,"account" : account] as [String : Any]
                 reference.collection("User").document(account).setData(PersonData) {(error) in
                     if error != nil{
-                        //print("無法存取錯誤在這行")
                         print(error!.localizedDescription)
                     }else{
+                        
+                        
                         print ("successfully write in !")
+                        do{
+                            try Auth.auth().signOut()
+                            print("我嘗試登出")
+                        }catch{
+                            print("沒有登出")
+                        }
+                        self.navigationController?.popViewController(animated: true)
+                        
                     }
                 }
             }
-        }
-        if let controller = self.storyboard?.instantiateViewController(withIdentifier: "LoginView") as? LoginVC
-        { controller.modalPresentationStyle = .currentContext
-            self.present(controller, animated: true, completion: nil)
         }
     }
     

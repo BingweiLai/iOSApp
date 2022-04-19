@@ -11,13 +11,8 @@ class LoginVC : UIViewController,UITextFieldDelegate{
     @IBOutlet weak var adminTxt: UITextField!
     @IBOutlet weak var pwdTxt: UITextField!
     @IBOutlet weak var btnLogin: UIButton!
+    var handle : AuthStateDidChangeListenerHandle?
     //  btnLogin事件
-    
-    
-    @IBAction func AdminBtn(_ sender: Any) {
-
-    }
-    
     @IBAction func btnLogin(_ sender: Any) {
         
         Auth.auth().signIn(withEmail: adminTxt.text!, password: pwdTxt.text!){(user, error)in if error != nil{
@@ -53,5 +48,21 @@ class LoginVC : UIViewController,UITextFieldDelegate{
         super.viewDidLoad()
         checkuser()
         btnLogin.layer.cornerRadius = 15
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        handle = Auth.auth().addStateDidChangeListener({ auth, user in
+            guard user != nil else{
+                print("沒登入")
+                return
+            }
+            print("有登入")
+            if let controller = self.storyboard?.instantiateViewController(withIdentifier: "UserView") as? UserVC{
+                controller.modalPresentationStyle = .currentContext
+                self.navigationController?.viewControllers = [controller]
+            }
+        })
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        Auth.auth().removeStateDidChangeListener(handle!)
     }
 }
