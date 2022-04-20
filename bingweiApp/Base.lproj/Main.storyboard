@@ -650,7 +650,7 @@
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="btnEdit"/>
                                 <connections>
-                                    <segue destination="WoA-CG-dKr" kind="show" id="xOO-de-fHC"/>
+                                    <segue destination="WoA-CG-dKr" kind="show" identifier="goToPhotoVC" id="xOO-de-fHC"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="註冊會員" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CxV-zE-Wi7">
@@ -680,6 +680,7 @@
                     <connections>
                         <outlet property="adminTxt" destination="zaf-Ru-Mwg" id="uQa-Ka-vP0"/>
                         <outlet property="btnAdmin" destination="BXY-1e-d04" id="Xq6-Zj-qr0"/>
+                        <outlet property="headimage" destination="L5K-bn-cfF" id="Bxa-vc-9ZO"/>
                         <outlet property="nameTxt" destination="p7Z-b9-nnP" id="Mja-yB-0k6"/>
                         <outlet property="pwdTxt" destination="MlV-ft-asJ" id="Wsc-A6-YcH"/>
                     </connections>
@@ -727,6 +728,10 @@
                                     <action selector="Camera:" destination="WoA-CG-dKr" eventType="touchUpInside" id="Ivy-hV-J4g"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c1A-Xc-fR8">
+                                <rect key="frame" x="87" y="174" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="KVj-5p-7VK"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -745,6 +750,7 @@
                     <connections>
                         <outlet property="Camera" destination="IKl-RE-Nfe" id="WWX-Ni-QdD"/>
                         <outlet property="PhotoDB" destination="x5Z-eY-xSI" id="vgS-Dd-3sj"/>
+                        <outlet property="headimage" destination="c1A-Xc-fR8" id="hOk-1x-hda"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LfT-ZZ-V7w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

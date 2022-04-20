@@ -6,17 +6,26 @@
 //
 
 import UIKit
+protocol photoVCDelegate : AnyObject{
+    func photoselected(photo:UIImage, imageindex:String)
+    
+}
+
 class PhotoVC : UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     @IBOutlet weak var PhotoDB: UIButton!
     @IBOutlet weak var Camera: UIButton!
     
+    @IBOutlet weak var headimage: UIImageView!
+    var delegate : photoVCDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         PhotoDB.layer.cornerRadius = 15
         Camera.layer.cornerRadius = 15
-        
     }
+    
+
     
     @IBAction func Camera(_ sender: Any) {
         let alert = UIAlertController(title: "功能尚未完成", message:"敬請期待", preferredStyle: .alert)
@@ -43,10 +52,8 @@ class PhotoVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
                   }
               }
         let imageFromCameraAction = UIAlertAction(title: "相機", style: .default) { (Void) in
-
                  // 判斷是否可以從相機取得照片來源
                  if UIImagePickerController.isSourceTypeAvailable(.camera) {
-
                      // 如果可以，指定 UIImagePickerController 的照片來源為 照片圖庫 (.camera)，並 present UIImagePickerController
                      imagePickerController.sourceType = .camera
                      self.present(imagePickerController, animated: true, completion: nil)
@@ -66,10 +73,6 @@ class PhotoVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
              //當使用者按下 uploadBtnAction 時會 present 剛剛建立好的三個 UIAlertAction 動作與
               present(imagePickerAlertController, animated: true, completion: nil)
         
-//        let alert = UIAlertController(title: "功能尚未完成", message:"敬請期待", preferredStyle: .alert)
-//        let ok = UIAlertAction(title: "ok", style: .default, handler: nil)
-//        alert.addAction(ok)
-//        self.present(alert, animated: true, completion: nil)
     }
 }
 
@@ -91,7 +94,8 @@ extension PhotoVC {
         // 當判斷有 selectedImage 時，我們會在 if 判斷式裡將圖片上傳
         if let selectedImage = selectedImageFromPicker {
             
-            print("\(uniqueString), \(selectedImage)")
+            headimage.image = selectedImage
+            delegate?.photoselected(photo: selectedImage, imageindex: uniqueString)
         }
         
         dismiss(animated: true, completion: nil)

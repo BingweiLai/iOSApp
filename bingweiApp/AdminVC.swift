@@ -14,6 +14,8 @@ class AdminVC: UIViewController{
     @IBOutlet weak var pwdTxt: UITextField!
     @IBOutlet weak var btnAdmin: UIButton!
     
+    @IBOutlet weak var headimage: UIImageView!
+    var imgnumber : String?
     //註冊動作鈕
     @IBAction func btnSend(_ sender: Any) {
         //註冊
@@ -71,6 +73,18 @@ class AdminVC: UIViewController{
     override func viewWillDisappear(_ animated: Bool) {
         dismiss(animated: true)
     }
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToPhotoVC"{
+            let vc = segue.destination as? PhotoVC
+            vc?.delegate = self
+        }
+    }
 }
 
+extension AdminVC: photoVCDelegate{
+    func photoselected(photo: UIImage, imageindex: String) {
+        headimage.image = photo
+        imgnumber = imageindex
+        print("隨機字串\(imgnumber)")
+    }
+}
