@@ -23,7 +23,7 @@ class AdminVC: UIViewController{
             let ok = UIAlertAction(title: "ok", style: .default, handler: nil)
             alert.addAction(ok)
             self.present(alert, animated: true, completion: nil)
-                        
+            //密碼小於6位元不給過
         }else if pwdTxt.text!.count<6{
             //通知視窗
             let alert = UIAlertController(title: "註冊失敗", message:"請檢查密碼輸入格式", preferredStyle: .alert)
@@ -40,7 +40,6 @@ class AdminVC: UIViewController{
                     let ok = UIAlertAction(title: "ok", style: .default, handler: nil)
                     alert.addAction(ok)
                     self.present(alert, animated: true, completion: nil)
-                    
                 }else{
                     //-----暱稱處理-----
                     let reference = Firestore.firestore()
@@ -66,7 +65,6 @@ class AdminVC: UIViewController{
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
