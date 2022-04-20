@@ -195,18 +195,18 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="暱稱：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ikl-az-4IN">
-                                        <rect key="frame" x="2" y="315.5" width="206" height="25.5"/>
+                                        <rect key="frame" x="73" y="315.5" width="64.5" height="25.5"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="ikl-az-4IN" secondAttribute="height" multiplier="105:13" id="Q0i-1T-hhp"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" id="mTM-Uz-f9Q"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="帳號：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zUm-UZ-F6i">
-                                        <rect key="frame" x="0.0" y="430" width="210" height="24"/>
+                                        <rect key="frame" x="74.5" y="430" width="61.5" height="24"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="zUm-UZ-F6i" secondAttribute="height" multiplier="35:4" id="MeX-92-cSD"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" id="TSQ-RZ-MsZ"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <nil key="textColor"/>
@@ -425,7 +425,8 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ptw-Pb-TpM">
                                 <rect key="frame" x="177" y="553" width="60" height="31"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="ptw-Pb-TpM" secondAttribute="height" multiplier="60:31" id="P5k-SM-JGB"/>
+                                    <constraint firstAttribute="height" constant="31" id="dKB-xZ-pZa"/>
+                                    <constraint firstAttribute="width" constant="60" id="v0h-Vt-vUv"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="註冊"/>
@@ -790,7 +791,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="fxy-lU-HLe"/>
+        <segue reference="XcS-EF-kzg"/>
         <segue reference="ik4-Ni-ojS"/>
     </inferredMetricsTieBreakers>
     <resources>

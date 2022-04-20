@@ -27,11 +27,25 @@ class AdminVC: UIViewController{
             let ok = UIAlertAction(title: "ok", style: .default, handler: nil)
             alert.addAction(ok)
             self.present(alert, animated: true, completion: nil)
-            
-            
-        }else{
+                        
+        }else if pwdTxt.text!.count<6{
+            //通知視窗
+            let alert = UIAlertController(title: "註冊失敗", message:"請檢查密碼輸入格式", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "ok", style: .default, handler: nil)
+            alert.addAction(ok)
+            self.present(alert, animated: true, completion: nil)
+        }
+        else{
             //帳號創建
-            Auth.auth().createUser(withEmail:adminTxt.text!, password:pwdTxt.text! )
+            Auth.auth().createUser(withEmail:adminTxt.text!, password:pwdTxt.text! ){user, error in
+                if error != nil{
+                    //通知視窗
+                    let alert = UIAlertController(title: "註冊失敗", message:"請檢查帳號輸入格式", preferredStyle: .alert)
+                    let ok = UIAlertAction(title: "ok", style: .default, handler: nil)
+                    alert.addAction(ok)
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
             //暱稱處理----------------------------------------------------------------------------------
             let reference = Firestore.firestore()
             if  let nickname = nameTxt.text,let account = adminTxt.text{//取得對話的匿名名稱,帳號
