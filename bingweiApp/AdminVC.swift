@@ -10,11 +10,8 @@ import UIKit
 class AdminVC: UIViewController{
     
     @IBOutlet weak var nameTxt: UITextField!
-    
     @IBOutlet weak var adminTxt: UITextField!
-    
     @IBOutlet weak var pwdTxt: UITextField!
-    
     @IBOutlet weak var btnAdmin: UIButton!
     
     //註冊動作鈕
@@ -43,19 +40,21 @@ class AdminVC: UIViewController{
                     let ok = UIAlertAction(title: "ok", style: .default, handler: nil)
                     alert.addAction(ok)
                     self.present(alert, animated: true, completion: nil)
-                }
-            }
-            //暱稱處理----------------------------------------------------------------------------------
-            let reference = Firestore.firestore()
-            if  let nickname = nameTxt.text,let account = adminTxt.text{//取得對話的匿名名稱,帳號
-                //PersonData字典建構
-                let PersonData = ["name" : nickname,"account" : account] as [String : Any]
-                reference.collection("User").document(account).setData(PersonData) {(error) in
-                    if error != nil{
-                        print(error!.localizedDescription)
-                    }else{
-                        print ("successfully write in !")
-                        self.navigationController?.popViewController(animated: true)
+                }else{
+                    //-----暱稱處理-----
+                    let reference = Firestore.firestore()
+                    //取得對話的匿名名稱,帳號
+                    if  let nickname = self.nameTxt.text,let account = self.adminTxt.text{
+                        //PersonData字典建構
+                        let PersonData = ["name" : nickname,"account" : account] as [String : Any]
+                        reference.collection("User").document(account).setData(PersonData) {(error) in
+                            if error != nil{
+                                print(error!.localizedDescription)
+                            }else{
+                                print ("successfully write in !")
+                                self.navigationController?.popViewController(animated: true)
+                            }
+                        }
                     }
                 }
             }
