@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4B05A1FF2803B058009A0CBB /* SreachVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B05A1FE2803B058009A0CBB /* SreachVC.swift */; };
-		4B05A2012803C113009A0CBB /* SearchbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B05A2002803C113009A0CBB /* SearchbarView.swift */; };
 		4B25CDE327F3D71200FBE786 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B25CDE227F3D71200FBE786 /* AppDelegate.swift */; };
 		4B25CDE527F3D71200FBE786 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B25CDE427F3D71200FBE786 /* SceneDelegate.swift */; };
 		4B25CDE727F3D71200FBE786 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B25CDE627F3D71200FBE786 /* HomeVC.swift */; };
@@ -35,7 +34,6 @@
 
 /* Begin PBXFileReference section */
 		4B05A1FE2803B058009A0CBB /* SreachVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SreachVC.swift; sourceTree = "<group>"; };
-		4B05A2002803C113009A0CBB /* SearchbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchbarView.swift; sourceTree = "<group>"; };
 		4B25CDDF27F3D71200FBE786 /* bingweiApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bingweiApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B25CDE227F3D71200FBE786 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4B25CDE427F3D71200FBE786 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -107,7 +105,6 @@
 				4BB6FD19280916D7005F03EE /* SearchCell.swift */,
 				4BFD977C2805569C009913BA /* TableViewCell.swift */,
 				4BFDFA76280E4B140028F362 /* HomeheaderCollectionReusableView.swift */,
-				4B05A2002803C113009A0CBB /* SearchbarView.swift */,
 				4B79625727F6CAA50040256E /* StructModel.swift */,
 				4BB6FD1B28092497005F03EE /* PhotoVC.swift */,
 				4B25CDE827F3D71200FBE786 /* Main.storyboard */,
@@ -211,7 +208,6 @@
 				4BB6FD1A280916D7005F03EE /* SearchCell.swift in Sources */,
 				4B05A1FF2803B058009A0CBB /* SreachVC.swift in Sources */,
 				4B41407C27F488F8004ECEAF /* AdminVC.swift in Sources */,
-				4B05A2012803C113009A0CBB /* SearchbarView.swift in Sources */,
 				4B25CDE727F3D71200FBE786 /* HomeVC.swift in Sources */,
 				4B79625827F6CAA50040256E /* StructModel.swift in Sources */,
 				4B597E5527FE918700E88D97 /* CollectionViewCell.swift in Sources */,

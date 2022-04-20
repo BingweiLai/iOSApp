@@ -8,8 +8,8 @@
 import UIKit
 
 class TableViewCell: UITableViewCell {
+    //訊息列
     @IBOutlet weak var MessageText: UITextView!
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         MessageText.layer.cornerRadius = 15

@@ -30,7 +30,5 @@ class PhotoVC : UIViewController{
         let ok = UIAlertAction(title: "ok", style: .default, handler: nil)
         alert.addAction(ok)
         self.present(alert, animated: true, completion: nil)
-        
-
     }
 }

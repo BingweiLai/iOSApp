@@ -6,23 +6,16 @@
 //
 
 import UIKit
-//import AVFoundation實作影片關鍵字
-//text Dechange實作searchbar
 
-//  首頁VC
+//首頁VC
 class SreachVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
     
-    
+    //collectionview
     @IBOutlet weak var collectionview: UICollectionView!
-    
-        override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
-    var list  = [searchobj]()//陣列清單
+    //陣列
+    var list  = [searchobj]()
     var searchlist = [searchobj]()
-    
-    //  初始化執行
+    //初始化執行
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionview.dataSource = self
@@ -36,15 +29,11 @@ class SreachVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         DispatchQueue.main.async {
             self.collectionview.reloadData()//啟動collectionview
         }
-       
-    }
-    
-    //-----------------------------------------------------------------------
-    //CollectView實作
+    }    
+    //-----CollectView實作-----
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.list.count
     }
-    
     //在這裡顯示cell
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let row = list[indexPath.row]
@@ -92,8 +81,7 @@ class SreachVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         print("item at \(indexPath.section)/\(indexPath.item) tapped")
         self.performSegue(withIdentifier: "SreachToRoom", sender: self)
       }
-    //------------------------------------------------------------------------------------
-    //搜尋功能實作
+    //-----搜尋功能實作-----//
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let searhview : UICollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "cellsearch", for: indexPath)
         return searhview
@@ -111,8 +99,7 @@ class SreachVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         print("測試")
         collectionview.reloadData()
     }
-    //------------------------------------------------------------------------------------
-    //以下為json
+    //-----json-----//
     //json解析函式
     func load <T: Decodable>(_ filename: String) -> T{
         let data: Data
@@ -135,9 +122,7 @@ class SreachVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         }
     }
     //當點擊view任何一處鍵盤收起
-  
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         self.view.endEditing(true)
-        
     }
 }

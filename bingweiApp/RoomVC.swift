@@ -12,24 +12,26 @@ import Firebase
 import FirebaseAuth
 
 class RoomVC : UIViewController, URLSessionWebSocketDelegate {
-    @IBOutlet weak var textInput: UITextField!//輸入文字的方塊
+    @IBOutlet weak var textInput: UITextField!
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var sendBtn: UIButton!
     @IBOutlet weak var leaveBtn: UIButton!
     @IBOutlet weak var chatView: UIView!
-    
+    //chatView的constant
     @IBOutlet weak var viewButton: NSLayoutConstraint!
-    
-    var textArray = [String]()//顯示訊息陣列
-    var UsernameToChat = [String]()//使用者名稱陣列
+    //顯示訊息陣列
+    var textArray = [String]()
+    //使用者名稱陣列
+    var UsernameToChat = [String]()
     var webSocketTask : URLSessionWebSocketTask?
     var keyname = "訪客"
     var MyVideo : AVPlayer?
     var looper: AVPlayerLooper?
 
-    //在進入直播間之前先確定是否有帳號登入
     override func viewWillAppear(_ animated: Bool) {
+        //在進入直播間之前先確定是否有帳號登入
         if Auth.auth().currentUser != nil{
+            //得到當前使用者資訊
             let user = Auth.auth().currentUser
             if let user = user{
                 let email = user.email
@@ -38,7 +40,7 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
                     print(error.localizedDescription)
                 }else{
                     if let snapshot = snapshot{
-                        //取值
+                        //取使用者暱稱
                         let snapshotdata = snapshot.data()?["name"]
                         if let nameStr = snapshotdata as? String{
                             self.keyname = nameStr
@@ -90,9 +92,8 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
         view.layer.addSublayer(playlayer)
         looper = AVPlayerLooper(player: play, templateItem: item)
         self.MyVideo?.play()
-        
     }
-    //webcsocket-----------------------------------------------------------
+    //-----webcsocket-----//
     func Wscontent(){
         //WS連線
         guard let url = URL(string: "wss://client-dev.lottcube.asia/ws/chat/chat:app_test?nickname=\(keyname)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!) else {
@@ -103,7 +104,8 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
         webSocketTask = seesion.webSocketTask(with: url)
         webSocketTask!.resume()
     }
-    func WsSend(){//發送func
+    //發送func
+    func WsSend(){
         let WSsendText = textInput.text!
         //按照傳輸的格式才能傳出去
         let message = URLSessionWebSocketTask.Message.string("{\"action\": \"N\",\"content\": \"\(WSsendText)\"}")
@@ -113,7 +115,8 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
         }
         }
     }
-    func WsReceive(){//接收func
+    //接收func
+    func WsReceive(){
         webSocketTask?.receive{ result in
             switch result{
             case .failure(let error):
@@ -169,7 +172,7 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCloseWith closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) {
         print("close!!")
     }
-    //聊天室實作-------------------------------------------------------------------------------
+    //-----聊天室實作-----//
     //發送訊息Button
     @IBAction func updateText(_ sender: Any) {
         guard let myOldText = textInput.text else {
@@ -187,7 +190,6 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
             WsSend()
             textInput.text = nil
         }
-        
     }
     //Alert按鈕-------------------------------------------------------------------------------------
     @IBAction func BackHomeBtn(_ sender: Any) {
@@ -264,6 +266,5 @@ extension RoomVC : UITableViewDelegate, UITableViewDataSource {
     //當點擊view任何一處鍵盤收起
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
-    }
-    
+    }    
 }

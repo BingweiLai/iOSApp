@@ -17,7 +17,6 @@ class AdminVC: UIViewController{
     
     @IBOutlet weak var btnAdmin: UIButton!
     
-    
     //註冊動作鈕
     @IBAction func btnSend(_ sender: Any) {
         //註冊

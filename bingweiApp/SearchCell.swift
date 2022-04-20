@@ -8,6 +8,7 @@
 import UIKit
 
 class SearchCell: UICollectionViewCell {
+    //這裡是search的物件
     @IBOutlet weak var Sreachphoto: UIImageView!
     @IBOutlet weak var Sreachstream: UILabel!
     @IBOutlet weak var Sreachname: UILabel!

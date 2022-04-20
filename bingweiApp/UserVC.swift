@@ -10,7 +10,6 @@ import Firebase
 import FirebaseAuth
 
 class UserVC : UIViewController {
-    
     //Logout按鈕
     @IBOutlet weak var logoutAction: UIButton!
     //初始化載入
@@ -24,10 +23,8 @@ class UserVC : UIViewController {
         if Auth.auth().currentUser != nil {
             let user = Auth.auth().currentUser
             if let user = user {
-                //現在只要取得email
+                //取得email
                 let email = user.email
-                //let uid = user.uid
-                //let photoURL = user.photoURL
                 let emailStr = String(email!)
                 accountLabel.text = "帳號 ：\(emailStr)"
                 
@@ -38,9 +35,7 @@ class UserVC : UIViewController {
                     if let snapshot = snapshot{
                         //取值
                     let snapshotdata = snapshot.data()?["name"]
-//                    self.nameLabel.text = "\(snapshotdata)"
                         if let nameStr = snapshotdata as? String{
-//                            print("\(nameStr)")
                         self.nameLabel.text = "暱稱：\(nameStr)"
                         }
                     }

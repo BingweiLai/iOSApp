@@ -8,7 +8,5 @@
 import UIKit
 
 class HomeheaderCollectionReusableView: UICollectionReusableView {
-    
     @IBOutlet weak var userName: UILabel!
-    
 }
