@@ -40,6 +40,7 @@ class AdminVC: UIViewController{
                     let ok = UIAlertAction(title: "ok", style: .default, handler: nil)
                     alert.addAction(ok)
                     self.present(alert, animated: true, completion: nil)
+                    
                 }else{
                     //-----暱稱處理-----
                     let reference = Firestore.firestore()
@@ -51,7 +52,7 @@ class AdminVC: UIViewController{
                             if error != nil{
                                 print(error!.localizedDescription)
                             }else{
-                                print ("successfully write in !")
+                                print ("成功存取資訊!")
                                 self.navigationController?.popViewController(animated: true)
                             }
                         }
