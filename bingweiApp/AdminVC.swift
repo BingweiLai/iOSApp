@@ -6,6 +6,7 @@
 //
 import FirebaseAuth
 import Firebase
+import FirebaseStorage
 import UIKit
 class AdminVC: UIViewController{
     
@@ -13,9 +14,26 @@ class AdminVC: UIViewController{
     @IBOutlet weak var adminTxt: UITextField!
     @IBOutlet weak var pwdTxt: UITextField!
     @IBOutlet weak var btnAdmin: UIButton!
-    
     @IBOutlet weak var headimage: UIImageView!
     var imgnumber : String?
+    let storage = Storage.storage().reference()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        headimage.image = UIImage(named: "picPersonal")
+        headimage.layer.cornerRadius = headimage.frame.width/2
+    }
+    //當點擊view任何喔一處鍵盤收起
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToPhotoVC"{
+            let vc = segue.destination as? PhotoVC
+            vc?.delegate = self
+        }
+    }
+    
     //註冊動作鈕
     @IBAction func btnSend(_ sender: Any) {
         //註冊
@@ -35,7 +53,7 @@ class AdminVC: UIViewController{
         }
         else{
             //帳號創建
-            Auth.auth().createUser(withEmail:adminTxt.text!, password:pwdTxt.text! ){user, error in
+            Auth.auth().createUser(withEmail:adminTxt.text!, password:pwdTxt.text! ){ [self]user, error in
                 if error != nil{
                     //通知視窗
                     let alert = UIAlertController(title: "註冊失敗", message:"請檢查帳號輸入格式", preferredStyle: .alert)
@@ -49,34 +67,33 @@ class AdminVC: UIViewController{
                     if  let nickname = self.nameTxt.text,let account = self.adminTxt.text{
                         //PersonData字典建構
                         let PersonData = ["name" : nickname,"account" : account] as [String : Any]
-                        reference.collection("User").document(account).setData(PersonData) {(error) in
+                        reference.collection("User").document(account).setData(PersonData) { [self](error) in
                             if error != nil{
                                 print(error!.localizedDescription)
                             }else{
+                                
+                                self.uploadPhoto(image: self.headimage.image!)
+                                
                                 print ("成功存取資訊!")
+                                
                                 self.navigationController?.popViewController(animated: true)
                             }
                         }
                     }
                 }
             }
+            
         }
     }
-    
-    //當點擊view任何喔一處鍵盤收起
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    override func viewWillDisappear(_ animated: Bool) {
-        dismiss(animated: true)
-    }
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goToPhotoVC"{
-            let vc = segue.destination as? PhotoVC
-            vc?.delegate = self
+    func uploadPhoto(image: UIImage) {
+        let  fileReference = storage.child("userphoto").child("\(self.adminTxt.text!).jpg")
+        if let data = image.jpegData(compressionQuality: 1) {
+            
+            fileReference.putData(data, metadata: nil){ matadata, error in guard error == nil else {
+                print("上傳圖片發生錯誤")
+                return
+            }
+            }
         }
     }
 }
@@ -85,6 +102,7 @@ extension AdminVC: photoVCDelegate{
     func photoselected(photo: UIImage, imageindex: String) {
         headimage.image = photo
         imgnumber = imageindex
-        print("隨機字串\(imgnumber)")
     }
 }
+
+

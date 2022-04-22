@@ -14,26 +14,17 @@ protocol photoVCDelegate : AnyObject{
 class PhotoVC : UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     @IBOutlet weak var PhotoDB: UIButton!
-    @IBOutlet weak var Camera: UIButton!
-    
     @IBOutlet weak var headimage: UIImageView!
     var delegate : photoVCDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        headimage.layer.cornerRadius = headimage.frame.width/2
         PhotoDB.layer.cornerRadius = 15
-        Camera.layer.cornerRadius = 15
+        
     }
     
 
-    
-    @IBAction func Camera(_ sender: Any) {
-        let alert = UIAlertController(title: "功能尚未完成", message:"敬請期待", preferredStyle: .alert)
-        let ok = UIAlertAction(title: "ok", style: .default, handler: nil)
-        alert.addAction(ok)
-        self.present(alert, animated: true, completion: nil)
-        
-    }
     @IBAction func PhotoBtn(_ sender: Any) {
         
         let imagePickerController = UIImagePickerController()
@@ -65,19 +56,16 @@ class PhotoVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
 
                  imagePickerAlertController.dismiss(animated: true, completion: nil)
              }
-
              // 將上面三個 UIAlertAction 動作加入 UIAlertController
              imagePickerAlertController.addAction(imageFromLibAction)
-             imagePickerAlertController.addAction(imageFromCameraAction)
+             //imagePickerAlertController.addAction(imageFromCameraAction)
              imagePickerAlertController.addAction(cancelAction)
              //當使用者按下 uploadBtnAction 時會 present 剛剛建立好的三個 UIAlertAction 動作與
               present(imagePickerAlertController, animated: true, completion: nil)
-        
     }
 }
 
 extension PhotoVC {
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         var selectedImageFromPicker: UIImage?
@@ -93,11 +81,10 @@ extension PhotoVC {
         
         // 當判斷有 selectedImage 時，我們會在 if 判斷式裡將圖片上傳
         if let selectedImage = selectedImageFromPicker {
-            
             headimage.image = selectedImage
             delegate?.photoselected(photo: selectedImage, imageindex: uniqueString)
         }
-        
+        //回去上頁
         dismiss(animated: true, completion: nil)
     }
 }

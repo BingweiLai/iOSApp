@@ -6,15 +6,23 @@
 //
 
 import UIKit
-import FirebaseAuth
 import Firebase
-
+import FirebaseAuth
+import FirebaseStorage
 //  首頁VC
 class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    
+    
+    
+    @IBOutlet weak var userLabel: UILabel!
+    @IBOutlet weak var userPhoto: UIImageView!
     //collectionview
     @IBOutlet weak var collectionview: UICollectionView!
     //連接WebSocket時的暱稱預設是訪客
     var keyname : String?
+    //相片
+    let storage = Storage.storage().reference()
     //陣列清單
     var list  = [Item]()
     //初始化
@@ -22,6 +30,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         super.viewDidLoad()
         collectionview.dataSource = self
         collectionview.delegate = self
+        userPhoto.layer.cornerRadius = userPhoto.frame.width/2
         //Json
         let searchresponse : SearchRespone = load("roomData")
         //取得Json解析
@@ -39,18 +48,30 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             if let user = user{
                 //取得使用者信箱
                 let email = user.email
+                guard let email = email else {
+                    return
+                }
+                let fileReference = storage.child("userphoto").child("\(email).jpg")
+                fileReference.getData(maxSize: .max){data, error in
+                    guard let data = data else {
+                        return
+                    }
+                    let getPhoto = UIImage(data: data)
+                    self.userPhoto.image = getPhoto
+                    
+                }
+                
                 let reference = Firestore.firestore().collection("User")
-                reference.document(email!).getDocument { (snapshot ,error) in if let error = error{
+                reference.document(email).getDocument { (snapshot ,error) in if let error = error{
                     print("錯誤訊息:\(error.localizedDescription)")
                 }else{
                     if let snapshot = snapshot{
                         //取值
                         let snapshotdata = snapshot.data()?["name"]
                         if let nameStr = snapshotdata as? String{
+                            self.userLabel.text = nameStr
                             //取得暱稱之後給keyname
                             self.keyname = nameStr
-                            print(nameStr)
-                            print(self.keyname)
                             //重整collectionview
                             self.collectionview.reloadData()
                         }
@@ -61,9 +82,12 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         }else{
             //沒有人登入時
             keyname = "訪客"
+            userLabel.text = keyname
+            userPhoto.image = UIImage(named: "topPic")
             self.collectionview.reloadData()
         }
     }
+
     //-----------------------------------------------------------------------
     //CollectView實作
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -116,14 +140,6 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.performSegue(withIdentifier: "ChatRoom", sender: self)
       }
-    //collectionview_header的設定
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-         let headView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerCollection", for: indexPath) as? HomeheaderCollectionReusableView
-        headView?.userName.text = keyname
-        print(headView?.userName.text)
-        return headView!
-        
-    }
     //------------------------------------------------------------------------------------
     //以下為json
     //json解析函式

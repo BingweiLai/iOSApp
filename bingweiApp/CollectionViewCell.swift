@@ -24,5 +24,7 @@ class CollectionViewCell: UICollectionViewCell {
         name.layer.masksToBounds = true
         headphoto.layer.cornerRadius = 10
         headphoto.layer.masksToBounds = true
+        Title.layer.cornerRadius = 10
+        Title.layer.masksToBounds = true
     }
 }

@@ -195,11 +195,11 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
     @IBAction func BackHomeBtn(_ sender: Any) {
         let controller = UIAlertController(title: "", message: "確定離開此聊天室？", preferredStyle: .alert)
         //將照片加入Alert視窗裡面
-        let imageView =  UIImageView(frame: CGRect(x: 60, y: 50, width: 150, height: 130))
+        let imageView =  UIImageView(frame: CGRect(x: 50, y: 50, width: 150, height: 130))
         imageView.image = UIImage(named: "brokenHeart")
         controller.view.addSubview(imageView)
-        let height = NSLayoutConstraint(item: controller.view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 240)
-        let width = NSLayoutConstraint(item: controller.view, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 200)
+        let height = NSLayoutConstraint(item: controller.view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 230)
+        let width = NSLayoutConstraint(item: controller.view, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 180)
         controller.view.addConstraint(height)
         controller.view.addConstraint(width)
         
@@ -208,7 +208,10 @@ class RoomVC : UIViewController, URLSessionWebSocketDelegate {
             self.webSocketTask?.cancel(with: .goingAway, reason: nil)
             self.MyVideo?.pause()
             self.dismiss(animated: true)
-            self.performSegue(withIdentifier: "BackHome", sender: self)
+            if let controller = self.storyboard?.instantiateViewController(withIdentifier: "HomeView") as? HomeVC{
+                controller.modalPresentationStyle = .currentContext
+            }
+            //self.performSegue(withIdentifier: "BackHome", sender: self)
         }
         controller.addAction(okAction)
         let cancelAction = UIAlertAction(title: "先不要", style: .cancel, handler: nil)
